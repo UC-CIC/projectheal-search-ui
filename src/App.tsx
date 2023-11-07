@@ -12,74 +12,69 @@ import Button from 'react-bootstrap/Button';
 import Header from './components/Header';
 import Sidenav from './components/Sidenav';
 import Home from './components/Home';
+import Card from 'react-bootstrap/Card';
 
 const aossPostEndpoint = process.env.REACT_APP_API_ENDPOINT + '';
-const titanApikey = process.env.REACT_APP_X_API_TOKEN + '';
 
 const apiServerUrl = process.env.REACT_APP_HELLO_API_ENDPOINT + '';
 const xtoken = process.env.REACT_APP_GET_API_TOKEN + '';
+const aossSearchEndpoint = process.env.REACT_APP_SEARCH_API_ENDPOINT + '';
 
-const fetchData = async () => {
-  const oldsettings = {
-    method: 'GET',
-    headers: {
-      'content-type': 'application/json',
-      'x-api-key': xtoken,
-    },
-  }
-  const response = await fetch(apiServerUrl,oldsettings);
-  if (!response.ok) {
-    throw new Error("Network response was not ok");
-  }
-  return response.json();
-};
+interface PostData {
+  statement: string;
+}
+
 
 function App() {
 
+
   const [inputPrompt, setInputPrompt] = useState("");
+  const [data, setData] = useState<any | null>(null);
+  
+  
   const handleInputChange = (event:any) => {
     setInputPrompt(event.target.value);
   };
 
-  const { mutate: getStatement }  = useMutation({
-    mutationFn: async (
-          apiInput: string
-    ) => {
-      let statementInput = {"statement": apiInput}
-      const settings = {
+  const { mutate } = useMutation<void, Error, PostData>(
+    async (dataToSend) => {
+      const apiUrl = aossSearchEndpoint;
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
-          'content-type': 'application/json',
-          'x-api-key': titanApikey
+          'Content-Type': 'application/json',
+          'x-api-key': xtoken
         },
-        body: JSON.stringify(statementInput)
-      }
-
-      console.log(settings)
-      const response = await fetch(aossPostEndpoint, settings);
+        body: JSON.stringify(dataToSend),
+      });
       if (!response.ok) {
-        throw new Error("Network response was not ok");
+        throw new Error('Network response was not ok');
       }
       console.log(response)
-      return response.json();
-    },
-      onSuccess: () => console.log("Bedrock API Call")
-  });
+      return await response.json(); 
+    }
+  );
+  
+
 
   const handleClick = () => {
     console.log(inputPrompt);
-    getStatement(inputPrompt);
+    const dataToSend: PostData = {
+      statement: inputPrompt,
+    };
+
+    mutate(dataToSend, {
+      onSuccess: (data) => {
+        console.log('Mutation was successful', data);
+        console.log(data?.["Exact match"][1][0]);
+        setData(data?.["Exact match"][1][0])
+      },
+      onError: (error) => {
+        console.error('There was an error:', error);
+      },
+    });
   };
 
-  const { data, isLoading, error } = useQuery("myData", fetchData, {
-    enabled: true, // Prevents the query from running automatically
-  });
-
-  useEffect(() => {
-    if (data) {
-      console.log("API call result:", data);
-    }
-  }, [data]);
 
   return (
     <>
@@ -115,7 +110,9 @@ function App() {
             <Sidenav />
           </Col>
           <Col sm={9}>
-            <Home misinfoId='1' misinfoTitle='Title' misinfoRisk='Risk' misinfoDisease='Disease' misinfoTopic='Topic' misinfoMetadata='Metadata'/>
+          {data &&
+            <Home misinfo={data} />
+          }
           </Col>
         </Row>
       </Container>

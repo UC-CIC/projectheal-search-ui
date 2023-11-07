@@ -3,35 +3,32 @@ import * as React from 'react';
 import Card from 'react-bootstrap/Card';
 
 interface IHomeProps {
-  misinfoId: string;
-  misinfoTitle: string;
-  misinfoTopic: string;
-  misinfoRisk: string;
-  misinfoDisease: string;
-  misinfoMetadata: string;
+  misinfo: any;
 }
 
-const Home: React.FunctionComponent<IHomeProps> = ({misinfoId, misinfoTitle, misinfoTopic, misinfoRisk, misinfoDisease, misinfoMetadata}) => {
+// const Home: React.FunctionComponent<IHomeProps> = ({misinfoId, misinfoTitle, misinfoTopic, misinfoRisk, misinfoDisease, misinfoMetadata}) => {
+const Home: React.FunctionComponent<IHomeProps> = ({misinfo}) => {
 
-    // useEffect(() => {
-    //   if (data) {
-    //     console.log("API call result:", data);
-    //   }
-    // }, [data]);
+  console.log(misinfo)
 
     return(
         <>
-        <Card>
-          <Card.Header as="h5">{misinfoMetadata}</Card.Header>
-          <Card.Body>
-            <Card.Title>{misinfoTitle}</Card.Title>
-            <Card.Text>
-              {misinfoTopic}
-            </Card.Text>
-          </Card.Body>
-        </Card>
-        
-        {/* {JSON.stringify(data)} */}
+          {Object.keys(misinfo).map((key) => {
+            const eachmisinfo = misinfo[key];
+            console.log(eachmisinfo)
+
+            return (
+              <Card key={key}>
+                <Card.Header as="h5" style={{ color: '#003594' }}>{eachmisinfo.metadata.medicalcondition.join(', ')}</Card.Header>
+                <Card.Body>
+                  <Card.Title>{key}</Card.Title>
+                  {/* <Card.Text>
+                    {eachmisinfo.metadata.medicalcondition.join(', ')}
+                  </Card.Text> */}
+                </Card.Body>
+              </Card>
+            );
+          })}
         </>
     );
 };
