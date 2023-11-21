@@ -29,7 +29,8 @@ function App() {
 
 
   const [inputPrompt, setInputPrompt] = useState("");
-  const [data, setData] = useState<any | null>(null);
+  const [samedata, setSamedata] = useState<any | null>(null);
+  const [similardata, setSimilardata] = useState<any | null>(null);
   
   
   const handleInputChange = (event:any) => {
@@ -66,8 +67,15 @@ function App() {
     mutate(dataToSend, {
       onSuccess: (data) => {
         console.log('Mutation was successful', data);
-        console.log(data?.["Exact match"][1][0]);
-        setData(data?.["Exact match"][1][0])
+        if (data?.["Search response"]!=''){
+          console.log(data?.["Search response"]);
+          setSamedata(data?.["Search response"][0][0])
+          setSimilardata(data?.["Search response"][1][0])
+        }
+        else {
+          console.log(data);
+          setSimilardata({"No matching results": {"metadata": {"medicalcondition": [""]}}})
+        }
       },
       onError: (error) => {
         console.error('There was an error:', error);
@@ -110,8 +118,8 @@ function App() {
             <Sidenav />
           </Col>
           <Col sm={9}>
-          {data &&
-            <Home misinfo={data} />
+          {similardata &&
+            <Home samemisinfo={samedata} similarmisinfo={similardata} />
           }
           </Col>
         </Row>
