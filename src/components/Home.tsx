@@ -20,7 +20,8 @@ interface PostData {
   intent: string;
   severity: string;
   source: string;
-  
+  medicalConditions: string[] | null;
+  topics: string[] | null;
 }
 
 interface FilterValues {
@@ -39,6 +40,8 @@ function Home() {
   const [intent, setIntent] = useState<string>('');
   const [source, setSource] =  useState<string>('');
   const [severity, setSeverity] =  useState<string>('');
+  const [topics, setTopics] =  useState<string[]>([]);
+
   const [metadata, setMetadata] =  useState<string[]>([]);
   const [filterValues, setFilterValues] = useState<FilterValues>({ medicalConditions: [], intent: '', source: '', severity:'', topics: [] });
 
@@ -74,7 +77,9 @@ function Home() {
       statement: inputPrompt,
       intent: intent,
       severity: severity,
-      source: source
+      source: source,
+      topics: topics,
+      medicalConditions: metadata
     };
     console.log(dataToSend)
     mutate(dataToSend, {
@@ -106,9 +111,8 @@ function Home() {
     setIntent(newFilterValues.intent !== null ? newFilterValues.intent : '');
     setSource(newFilterValues.source !== null ? newFilterValues.source : '');
     setSeverity(newFilterValues.severity !== null ? newFilterValues.severity : '');
-    setMetadata(newFilterValues.topics !== null ? newFilterValues.topics : []);
-
-
+    setTopics(newFilterValues.topics !== null ? newFilterValues.topics : []);
+    console.log(newFilterValues);
   };
 
 
@@ -151,9 +155,6 @@ function Home() {
           </Col>
         </Row>
       </Container>
-      {intent}
-      {source}
-      {severity}
     </>
   );
 }

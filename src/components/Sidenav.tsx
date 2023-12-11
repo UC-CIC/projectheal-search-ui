@@ -129,7 +129,7 @@ const Sidenav: React.FunctionComponent<SidenavProps> = ({onFilterValuesChange}) 
       'topics': selectedTopics
     };
   
-    console.log(filtersObject);
+    // console.log(filtersObject);
     onFilterValuesChange(filtersObject);
   };
 
