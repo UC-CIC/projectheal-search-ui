@@ -12,9 +12,6 @@ import Sidenav from './Sidenav';
 import Display from './Display';
 import Card from 'react-bootstrap/Card';
 
-const aossPostEndpoint = process.env.REACT_APP_API_ENDPOINT + '';
-
-const apiServerUrl = process.env.REACT_APP_HELLO_API_ENDPOINT + '';
 const xtoken = process.env.REACT_APP_GET_API_TOKEN + '';
 const aossSearchEndpoint = process.env.REACT_APP_SEARCH_API_ENDPOINT + '';
 
@@ -26,16 +23,25 @@ interface PostData {
   
 }
 
+interface FilterValues {
+  medicalConditions: string[] | null;
+  intent: string | null;
+  source: string | null;
+  severity: string | null;
+  topics: string[] | null;
+}
 
 function Home() {
-
 
   const [inputPrompt, setInputPrompt] = useState("");
   const [samedata, setSamedata] = useState<any | null>(null);
   const [similardata, setSimilardata] = useState<any | null>(null);
-  const [intent, setIntent] = useState("");
-  const [source, setSource] = useState("");
-  const [severity, setSeverity] = useState("");
+  const [intent, setIntent] = useState<string>('');
+  const [source, setSource] =  useState<string>('');
+  const [severity, setSeverity] =  useState<string>('');
+  const [metadata, setMetadata] =  useState<string[]>([]);
+  const [filterValues, setFilterValues] = useState<FilterValues>({ medicalConditions: [], intent: '', source: '', severity:'', topics: [] });
+
   
   const handleInputChange = (event:any) => {
     setInputPrompt(event.target.value);
@@ -63,13 +69,14 @@ function Home() {
 
   const handleClick = () => {
     console.log(inputPrompt);
+
     const dataToSend: PostData = {
       statement: inputPrompt,
-      intent: "",
-      severity: "",
-      source:""
+      intent: intent,
+      severity: severity,
+      source: source
     };
-
+    console.log(dataToSend)
     mutate(dataToSend, {
       onSuccess: (data) => {
         console.log('Mutation was successful', data);
@@ -87,6 +94,21 @@ function Home() {
         console.error('There was an error:', error);
       },
     });
+  };
+
+  const handleFilterValuesChange = (newFilterValues: any) => {
+    setFilterValues(newFilterValues);
+
+    // if (newFilterValues.intent !== null) {
+    //   setIntent(newFilterValues.intent);
+    // }
+    setMetadata(newFilterValues.medicalConditions !== null ? newFilterValues.medicalConditions : []);
+    setIntent(newFilterValues.intent !== null ? newFilterValues.intent : '');
+    setSource(newFilterValues.source !== null ? newFilterValues.source : '');
+    setSeverity(newFilterValues.severity !== null ? newFilterValues.severity : '');
+    setMetadata(newFilterValues.topics !== null ? newFilterValues.topics : []);
+
+
   };
 
 
@@ -120,7 +142,7 @@ function Home() {
         </Row>
         <Row>
           <Col sm={3}>
-            <Sidenav />
+            <Sidenav  onFilterValuesChange={handleFilterValuesChange}/>
           </Col>
           <Col sm={9}>
           {similardata &&
@@ -129,7 +151,9 @@ function Home() {
           </Col>
         </Row>
       </Container>
-      
+      {intent}
+      {source}
+      {severity}
     </>
   );
 }
