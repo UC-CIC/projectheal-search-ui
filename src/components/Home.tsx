@@ -87,8 +87,8 @@ function Home() {
         console.log('Mutation was successful', data);
         if (data?.["Search response"]!=''){
           console.log(data?.["Search response"]);
-          setSamedata(data?.["Search response"][0][0])
-          setSimilardata(data?.["Search response"][1][0])
+          setSamedata(data?.["Search response"][0])
+          setSimilardata(data?.["Search response"][1])
         }
         else {
           console.log(data);

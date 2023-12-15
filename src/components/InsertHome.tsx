@@ -32,7 +32,7 @@ function InsertHome() {
       setInputPrompt(event.target.value);
     };
   
-    const { mutate } = useMutation<void, Error, IInsertHomeProps>(
+    const { mutate, isLoading } = useMutation<void, Error, IInsertHomeProps>(
       async (dataToSend) => {
         const apiUrl = aossPostEndpoint;
         const response = await fetch(apiUrl, {
@@ -77,6 +77,7 @@ function InsertHome() {
     });
   };
 
+
   const handleSubmit = async (event: { preventDefault: () => void; currentTarget: any; }) => {
 
     event.preventDefault(); 
@@ -104,6 +105,10 @@ function InsertHome() {
 
     handleClick();
   }, [intent, severity, source]);
+  
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <>

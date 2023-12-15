@@ -49,15 +49,8 @@ const Sidenav: React.FunctionComponent<SidenavProps> = ({onFilterValuesChange}) 
   const [severityopen, setSeverityopen] = useState(false);
   const [selectedMedicalConditions, setSelectedMedicalConditions] = useState<string[]>([]);
   const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
+  const [cleartrue, setCleartrue] = useState(false);
 
-  const [checkboxState, setCheckboxState] = useState({
-    misinformation: false,
-    disinformation: false,
-    malinformation: false,
-    quora: false,
-    twitter: false,
-    reddit: false,
-  });
   const [selectedSeverity, setSelectedSeverity] = useState<string | null>(null);
   const handleseverityRadioChange = (value: string) => {
     setSelectedSeverity(value);
@@ -120,6 +113,7 @@ const Sidenav: React.FunctionComponent<SidenavProps> = ({onFilterValuesChange}) 
         : [...prevSelected, condition]
     );
   };
+
   const handleFilterClick = () => {
     const filtersObject: Record<string, string | string[] | null> = {
       'medicalConditions': selectedMedicalConditions,
@@ -140,8 +134,14 @@ const Sidenav: React.FunctionComponent<SidenavProps> = ({onFilterValuesChange}) 
     setSelectedMedicalConditions([])
     setSelectedTopics([])
 
+    setCleartrue(true)
   };
 
+
+  if(cleartrue) {
+    handleFilterClick()
+    setCleartrue(false)
+  }
 
   return (
     <>
