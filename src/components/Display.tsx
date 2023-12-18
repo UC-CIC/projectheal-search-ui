@@ -81,7 +81,7 @@ const Display: React.FunctionComponent<IDisplayProps> = ({samemisinfo, similarmi
                     <Card.Title>{key}</Card.Title>
                   </Card.Body>
                   <ListGroup variant="flush">
-                  {Object.keys(similarmisinfo[outerKey]).map((similarKey) => {
+                  {similarmisinfo && Object.keys(similarmisinfo[outerKey]).map((similarKey) => {
                     // const eachmisinfo = similarmisinfo[similarKey];                  
                     return (
                       <ListGroup.Item key={similarKey}>

@@ -91,7 +91,8 @@ function Home() {
         }
         else {
           console.log(data);
-          setSimilardata({"No matching results": {"metadata": {"medicalcondition": [""]}}})
+          // setSamedata({"No matching results": ""})
+          // setSimilardata({"No matching results": ""})
         }
       },
       onError: (error) => {
