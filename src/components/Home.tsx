@@ -63,7 +63,7 @@ function Home() {
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-      console.log(response)
+      // console.log(response)
       return await response.json(); 
     }
   );
@@ -80,17 +80,17 @@ function Home() {
       topics: topics,
       medicalConditions: metadata
     };
-    console.log(dataToSend)
+    // console.log(dataToSend)
     mutate(dataToSend, {
       onSuccess: (data) => {
         // console.log('Mutation was successful', data);
         if (data?.["Search response"]!==''){
-          console.log(data?.["Search response"]);
+          // console.log(data?.["Search response"]);
           setSamedata(data?.["Search response"][0])
           setSimilardata(data?.["Search response"][1])
         }
         else {
-          console.log(data);
+          // console.log(data);
           // setSamedata({"No matching results": ""})
           // setSimilardata({"No matching results": ""})
         }
@@ -109,7 +109,7 @@ function Home() {
     setSource(newFilterValues.source !== null ? newFilterValues.source : '');
     setSeverity(newFilterValues.severity !== null ? newFilterValues.severity : '');
     setTopics(newFilterValues.topics !== null ? newFilterValues.topics : []);
-    console.log(newFilterValues);
+    // console.log(newFilterValues);
   };
 
 

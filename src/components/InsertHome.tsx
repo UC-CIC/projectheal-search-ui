@@ -6,6 +6,7 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
+import Spinner from 'react-bootstrap/Spinner';
 
 const aossPostEndpoint = process.env.REACT_APP_API_ENDPOINT + '';
 
@@ -46,7 +47,7 @@ function InsertHome() {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
-        console.log(response)
+        // console.log(response)
         return await response.json(); 
       }
     );
@@ -54,10 +55,10 @@ function InsertHome() {
 
   const handleClick = () => {
 
-    console.log(inputPrompt);
-    console.log(intent);
-    console.log(severity);
-    console.log(source);
+    // console.log(inputPrompt);
+    // console.log(intent);
+    // console.log(severity);
+    // console.log(source);
     
     const dataToSend: IInsertHomeProps = {
       statement: inputPrompt,
@@ -68,11 +69,11 @@ function InsertHome() {
 
     mutate(dataToSend, {
       onSuccess: (data) => {
-        console.log('Mutation was successful', data);
+        // console.log('Mutation was successful', data);
 
       },
       onError: (error) => {
-        console.error('There was an error:', error);
+        // console.error('There was an error:', error);
       },
     });
   };
@@ -98,9 +99,9 @@ function InsertHome() {
     handleClick();
   }, [intent, severity, source]);
   
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  // if (isLoading) {
+  //   return <div>Loading...</div>;
+  // }
 
   return (
     <>
@@ -216,6 +217,7 @@ function InsertHome() {
         </Form.Group>
       </fieldset>
 
+      {isLoading && <center><Spinner animation="border" variant="secondary" /></center>}
 
       <Form.Group as={Row} className="mb-3">
         <Col sm={{ span: 10, offset: 2 }}>
