@@ -27,12 +27,12 @@ const Header: React.FunctionComponent<IHeaderProps> = (props) => {
     <Navbar bg="nvBr" data-bs-theme="light" expand="lg">
     <Container fluid>
       <div>
-        <Navbar.Brand href="#" style={{color: "white"}}>Project HEAL</Navbar.Brand>
+        <Navbar.Brand href="/" style={{color: "white"}}>Project HEAL</Navbar.Brand>
       </div>
       <div style={{display: "flex"}}>
         <div className='elem'><Nav.Link href="#">About</Nav.Link></div>
         <div className='elem'><Nav.Link href="#">Learn</Nav.Link></div>
-        <div className='elem'><Nav.Link href="#">Contribute</Nav.Link></div>
+        <div className='elem'><Nav.Link href="/insert">Contribute</Nav.Link></div>
         <Form className="d-flex">
           <Form.Control
             type="search"

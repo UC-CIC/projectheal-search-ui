@@ -71,7 +71,7 @@ const Sidenav: React.FunctionComponent<SidenavProps> = ({onFilterValuesChange}) 
   
   useEffect(() => {
     if (data) {
-      console.log("API call result:", data);
+      // console.log("API call result:", data);
       console.log(data["All results"]["hits"]["hits"])
 
       const hits = data["All results"]["hits"]["hits"];
@@ -92,7 +92,7 @@ const Sidenav: React.FunctionComponent<SidenavProps> = ({onFilterValuesChange}) 
       });
     }
     else  {
-      console.log("No");
+      console.log("Loading");
     }
   }, [data]);
 

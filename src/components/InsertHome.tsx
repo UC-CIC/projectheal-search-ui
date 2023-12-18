@@ -82,10 +82,6 @@ function InsertHome() {
 
     event.preventDefault(); 
     const form = event.currentTarget;
-
-    console.log("Intent:", form.formHorizontalIntentRadios.value);
-    console.log("Severity:", form.formHorizontalSeverityRadios.value);
-    console.log("Source:", form.formHorizontalSourceRadios.value);
     
     setIntent(form.formHorizontalIntentRadios.value);
     setSeverity(form.formHorizontalSeverityRadios.value);
@@ -98,10 +94,6 @@ function InsertHome() {
         setInitialRender(false);
         return;
       }
-
-    console.log("Intent state:", intent);
-    console.log("Severity state:", severity);
-    console.log("Source state:", source);
 
     handleClick();
   }, [intent, severity, source]);

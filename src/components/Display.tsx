@@ -27,20 +27,13 @@ interface IDisplayProps {
   similarmisinfo: Record<string, EachSimilarmisinfo>;
 }
 
-// interface IDisplayProps {
-//   samemisinfo: any;
-//   similarmisinfo: any;
-// }
-
-// const Display: React.FunctionComponent<IDisplayProps> = ({misinfoId, misinfoTitle, misinfoTopic, misinfoRisk, misinfoDisease, misinfoMetadata}) => {
 const Display: React.FunctionComponent<IDisplayProps> = ({samemisinfo, similarmisinfo}) => {
-  console.log(samemisinfo)
-  console.log(similarmisinfo)
+  // console.log(samemisinfo)
+  // console.log(similarmisinfo)
     return(
         <>
                     
           {samemisinfo && Object.entries(samemisinfo).map(([outerKey, eachsamemisinfo]: [string, EachSamemisinfo]) => {
-            // const eachsamemisinfo = samemisinfo[keyval];
             return Object.entries(eachsamemisinfo).map(([key, value] : [string, any]) => {
 
               return  (  

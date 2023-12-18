@@ -71,7 +71,7 @@ function Home() {
 
 
   const handleClick = () => {
-    console.log(inputPrompt);
+    // console.log(inputPrompt);
 
     const dataToSend: PostData = {
       statement: inputPrompt,
@@ -136,14 +136,6 @@ function Home() {
         {/* <Row>
           {JSON.stringify(data)}
         </Row> */}
-        <Row>
-          <Col sm={3}>
-            FILTER
-          </Col>
-          <Col sm={9}>
-            VIEW SORT
-          </Col>
-        </Row>
         <Row>
           <Col sm={3}>
             <Sidenav  onFilterValuesChange={handleFilterValuesChange}/>
