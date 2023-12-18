@@ -1,16 +1,9 @@
-import React, { createContext, useContext, ReactNode } from 'react';
+import React from 'react';
 import { useState, useEffect } from 'react';
 import {useQuery} from 'react-query';
 import Button from 'react-bootstrap/Button';
 import Collapse from 'react-bootstrap/Collapse';
 import Form from 'react-bootstrap/Form';
-
-const options = [
-  {
-    name: 'Disable backdrop',
-    scroll: true,
-    backdrop: false,
-  }];
 
 interface SidenavProps {
   onFilterValuesChange: (newFilterValues: Record<string, string | string[] | null>) => void;
@@ -72,7 +65,7 @@ const Sidenav: React.FunctionComponent<SidenavProps> = ({onFilterValuesChange}) 
   useEffect(() => {
     if (data) {
       // console.log("API call result:", data);
-      console.log(data["All results"]["hits"]["hits"])
+      // console.log(data["All results"]["hits"]["hits"])
 
       const hits = data["All results"]["hits"]["hits"];
 
@@ -92,7 +85,7 @@ const Sidenav: React.FunctionComponent<SidenavProps> = ({onFilterValuesChange}) 
       });
     }
     else  {
-      console.log("Loading");
+      // console.log("Loading");
     }
   }, [data]);
 
@@ -219,8 +212,8 @@ const Sidenav: React.FunctionComponent<SidenavProps> = ({onFilterValuesChange}) 
           </Collapse>
         </div>
         <div>
-          <Button variant="secondary" style={{width: '50%'}} onClick={handleFilterClick}>Apply filters</Button>
-          <Button variant="secondary" style={{width: '50%'}} onClick={handleClearFilterClick}>Clear Filters</Button>
+          <Button variant="secondary" style={{width: '50%', backgroundColor: '#003594'}} onClick={handleFilterClick}>Apply filters</Button>
+          <Button variant="secondary" style={{width: '50%', backgroundColor: '#003594'}} onClick={handleClearFilterClick}>Clear Filters</Button>
         </div>
     </>
   );

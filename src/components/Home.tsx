@@ -1,5 +1,5 @@
-import {useState, useEffect} from "react";
-import {useQuery, useMutation} from 'react-query';
+import {useState} from "react";
+import {useMutation} from 'react-query';
 import '../App.css';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -7,10 +7,9 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Button from 'react-bootstrap/Button';
-import Header from './Header';
 import Sidenav from './Sidenav';
 import Display from './Display';
-import Card from 'react-bootstrap/Card';
+import Spinner from 'react-bootstrap/Spinner';
 
 const xtoken = process.env.REACT_APP_GET_API_TOKEN + '';
 const aossSearchEndpoint = process.env.REACT_APP_SEARCH_API_ENDPOINT + '';
@@ -50,7 +49,7 @@ function Home() {
     setInputPrompt(event.target.value);
   };
 
-  const { mutate } = useMutation<void, Error, PostData>(
+  const { mutate, isLoading } = useMutation<void, Error, PostData>(
     async (dataToSend) => {
       const apiUrl = aossSearchEndpoint;
       const response = await fetch(apiUrl, {
@@ -84,8 +83,8 @@ function Home() {
     console.log(dataToSend)
     mutate(dataToSend, {
       onSuccess: (data) => {
-        console.log('Mutation was successful', data);
-        if (data?.["Search response"]!=''){
+        // console.log('Mutation was successful', data);
+        if (data?.["Search response"]!==''){
           console.log(data?.["Search response"]);
           setSamedata(data?.["Search response"][0])
           setSimilardata(data?.["Search response"][1])
@@ -104,9 +103,6 @@ function Home() {
   const handleFilterValuesChange = (newFilterValues: any) => {
     setFilterValues(newFilterValues);
 
-    // if (newFilterValues.intent !== null) {
-    //   setIntent(newFilterValues.intent);
-    // }
     setMetadata(newFilterValues.medicalConditions !== null ? newFilterValues.medicalConditions : []);
     setIntent(newFilterValues.intent !== null ? newFilterValues.intent : '');
     setSource(newFilterValues.source !== null ? newFilterValues.source : '');
@@ -127,7 +123,7 @@ function Home() {
           <Col sm={5}>
             <InputGroup>
               <Form.Control type="text" placeholder="Search for a mis/disinformation threat by keyword(s)" onChange={handleInputChange}/>
-              <Button variant="outline-secondary" id="button-addon1"  onClick={handleClick}>Search</Button>
+              <Button id="button-addon1" onClick={handleClick} style={{ backgroundColor: '#003594'}}>Search</Button>
             </InputGroup>
           </Col>
           <Col sm={5}>
@@ -141,9 +137,10 @@ function Home() {
             <Sidenav  onFilterValuesChange={handleFilterValuesChange}/>
           </Col>
           <Col sm={9}>
-          {similardata &&
-            <Display samemisinfo={samedata} similarmisinfo={similardata} />
-          }
+            {isLoading && <center><Spinner animation="border" variant="secondary" /></center>}
+            {similardata &&
+              <Display samemisinfo={samedata} similarmisinfo={similardata} />
+            }
           </Col>
         </Row>
       </Container>
