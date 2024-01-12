@@ -1,4 +1,26 @@
 # projectheal-search-ui
+*.env file*
+```
+REACT_APP_X_API_TOKEN=""
+REACT_APP_API_ENDPOINT=""
+REACT_APP_GET_API_TOKEN=""
+REACT_APP_HELLO_API_ENDPOINT=""
+REACT_APP_SEARCH_API_ENDPOINT=""
+REACT_APP_SEARCH_ALL_API_ENDPOINT=""
+AOSS_ENDPOINT = ""
+EMBEDDINGS_API = ""
+EMBEDDINGS_API_KEY = ""
+```
+X_API_TOKEN:  application x-api-key
+API_ENDPOINT: application API (UI->Backend)
+GET_API_TOKEN: application API x-api-key
+HELLO_API_ENDPOINT: application API (UI->Backend) /prod/api/hello
+SEARCH_API_ENDPOINT: application API (UI->Backend) /prod/aoss/search
+SEARCH_ALL_API_ENDPOINT: application API (UI->Backend) /prod/aoss/search_all
+AOSS_ENDPOINT: amazon open search endpoint
+EMBEDDINGS_API: API managing Bedrock rleated calls /prod/api/generate/embeddings
+EMBEDDINGS_API_KEY: x-api-key for managing Bedrock rleated calls
+
 
 # Getting Started with Create React App
 
